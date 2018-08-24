@@ -1,0 +1,34 @@
+//@import "../node_modules/bootstrap/dist/css/bootstrap-grid";
+@import 'variables';
+@font-face {
+    font-family: DroidSansMono;
+    src: url('assets/fonts/DroidSansMono.ttf')
+}
+
+* {
+    font-family: 'DroidSansMono';
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+  //  overflow-y: hidden;
+    border: 1px solid $color-border;
+    margin: 0;
+    background: $color-dark;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    /* remove scrollbar space */
+    background: transparent;
+    /* optional: just make scrollbar invisible */
+}
+
+/* optional: show position indicator in red */
+
+::-webkit-scrollbar-thumb {
+    background: #FF0000;
+}

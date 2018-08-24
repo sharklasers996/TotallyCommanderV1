@@ -1,0 +1,26 @@
+<div id="desra">
+  <table>
+    <tr>
+      <th class="col-6">
+        Name
+      </th>
+      <th class="col-4">
+        Size
+      </th>
+      <th class="col-4">
+        Date
+      </th>
+    </tr>
+    <tr *ngFor="let file of files" [ngClass]="{ 'selected-file' : file.selected }">
+      <td id="file-{{file.id}}">
+        {{file.name}}
+      </td>
+      <td>
+        {{file.sizeInBytes}}
+      </td>
+      <td>
+        {{file.modifiedAt}}
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,14 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import {NgxElectronModule} from 'ngx-electron';
 
 import { AppComponent } from './app.component';
+import { FileBrowserPanelComponent } from './components/file-browser-panel/file-browser-panel.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FileBrowserPanelComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    NgxElectronModule
   ],
   providers: [],
   bootstrap: [AppComponent]
