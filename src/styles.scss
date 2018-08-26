@@ -15,18 +15,19 @@ body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-  //  overflow-y: hidden;
+    overflow-y: hidden;
     border: 1px solid $color-border;
     margin: 0;
-    background: $color-dark;
-}
-::-webkit-scrollbar {
-    width: 0px;
-    /* remove scrollbar space */
-    background: transparent;
-    /* optional: just make scrollbar invisible */
+    background: $color-background;
+    color: $color-foreground;
 }
 
+// ::-webkit-scrollbar {
+    //     width: 0px;
+    //     /* remove scrollbar space */
+    //     background: transparent;
+    //     /* optional: just make scrollbar invisible */
+    // }
 /* optional: show position indicator in red */
 
 ::-webkit-scrollbar-thumb {

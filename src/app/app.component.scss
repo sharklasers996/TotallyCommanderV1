@@ -1,10 +1,10 @@
 .file-browser-container {
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
+    display: flex; // flex-wrap: wrap; // height: 100%;
 }
 
 .file-browser-panel {
-    flex: 0 0 50%;
-    max-width: 50%;
+    // flex: 0 0 50%;
+    // max-width: 50%;
+    height: 100vh;
+    overflow-y: scroll;
 }

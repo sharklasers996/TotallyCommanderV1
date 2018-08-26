@@ -95,8 +95,8 @@ export class FileBrowserPanelComponent implements OnInit {
   private selectFile(): void {
     this.files[this.selectedFileIndex].selected = true;
 
-    var el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
-    var d = document.getElementById('desra');
+    let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
+    let d = document.getElementById('desra');
 
     if (!this.isElementInViewport(el)) {
       //el.scrollIntoView({ behavior: "smooth" });
