@@ -3,7 +3,7 @@ import { ElectronService } from 'ngx-electron';
 import { FileBrowser } from '../Utils/file-browser';
 
 import { MousetrapStatic } from 'mousetrap';
-import { Windows } from '../enums/windows';
+import { PanelType } from '../enums/panel-type';
 
 @Component({
   selector: 'tc-root',
@@ -13,14 +13,14 @@ import { Windows } from '../enums/windows';
 export class AppComponent {
   title = 'TotallyCommanderV1';
 
-  public leftPanel: Windows = Windows.LeftFileBrowserPanel;
-  public rightPanel: Windows = Windows.RightFileBrowserPanel;
+  public leftPanel: PanelType = PanelType.LeftFileBrowserPanel;
+  public rightPanel: PanelType = PanelType.RightFileBrowserPanel;
 
 
   constructor(private _electronService: ElectronService) {
 
 
-    const mouseTrap: MousetrapStatic = window.require("mousetrap");
+    const mouseTrap: MousetrapStatic = window.require('mousetrap');
     mouseTrap.bind('esc', (e, c) => {
       console.log(e);
       console.log(c);

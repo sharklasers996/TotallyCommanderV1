@@ -1,4 +1,4 @@
-export enum Windows {
+export enum PanelType {
     LeftFileBrowserPanel,
     RightFileBrowserPanel
 }

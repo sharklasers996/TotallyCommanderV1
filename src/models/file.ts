@@ -1,7 +1,7 @@
-import { FileType } from "../enums/file-type";
+import { FileType } from '../enums/file-type';
 
 export class File {
-    public id: number;
+    public id: string;
     public selected: boolean;
 
     constructor(

@@ -1,7 +1,7 @@
-import { FSJetpack, InspectResult } from "fs-jetpack/types";
-import { Injectable } from "@angular/core";
-import { File } from "../models/file";
-import { FileType } from "../enums/file-type";
+import { FSJetpack, InspectResult } from 'fs-jetpack/types';
+import { Injectable } from '@angular/core';
+import { File } from '../models/file';
+import { FileType } from '../enums/file-type';
 
 @Injectable({
     providedIn: 'root'
@@ -10,14 +10,14 @@ export class FileBrowser {
     private jetpack: FSJetpack;
 
     constructor() {
-        this.jetpack = window.require("fs-jetpack");
+        this.jetpack = window.require('fs-jetpack');
     }
 
     public browse(pathOrFile: string | File): File[] {
         let path = '';
 
         if (typeof pathOrFile === 'string') {
-            path = pathOrFile
+            path = pathOrFile;
         } else {
             path = pathOrFile.fullName;
         }
@@ -27,11 +27,11 @@ export class FileBrowser {
             path = path + '/';
         }
 
-        var list = this.jetpack.list(path);
+        let list = this.jetpack.list(path);
 
         let files = list.map(file => {
 
-            var inspectFileResult = this.jetpack.inspect(path + file, { times: true, absolutePath: true });
+            let inspectFileResult = this.jetpack.inspect(path + file, { times: true, absolutePath: true });
 
             return new File(
                 inspectFileResult.name,
