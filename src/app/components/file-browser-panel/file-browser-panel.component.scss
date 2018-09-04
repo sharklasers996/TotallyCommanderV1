@@ -2,3 +2,12 @@
 .selected-file {
     background: $color-dark;
 }
+
+.fb-panel {
+    overflow-y: scroll;
+    height: 97vh;
+}
+
+.top-fb-panel {
+    height: 2.5vh;
+}
