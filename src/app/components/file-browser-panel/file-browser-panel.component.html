@@ -6,8 +6,6 @@
   <div>
     {{currentDirectory?.fullName}}
   </div>
-</div>
-<div class="fb-panel">
   <div>
     <table>
       <tr>
@@ -21,14 +19,20 @@
           Date
         </th>
       </tr>
+    </table>
+  </div>
+</div>
+<div class="fb-panel">
+  <div>
+    <table>
       <tr *ngFor="let file of files" [ngClass]="{ 'selected-file' : file.selected }">
-        <td id="file-{{file.id}}">
+        <td id="file-{{file.id}}" class="col-6">
           {{file.name}}
         </td>
-        <td>
+        <td class="col-4">
           {{file.sizeInBytes}}
         </td>
-        <td>
+        <td class="col-4">
           {{file.modifiedAtString}}
         </td>
       </tr>
