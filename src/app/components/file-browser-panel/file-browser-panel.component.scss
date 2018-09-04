@@ -5,9 +5,17 @@
 
 .fb-panel {
     overflow-y: scroll;
-    height: 97vh;
+    height: 91vh;
 }
 
 .top-fb-panel {
-    height: 2.5vh;
+    height: 6.5vh;
+}
+
+.fb-tabs {
+    display: flex;
+}
+
+.fb-tab {
+    padding: 10px;
 }

@@ -22,6 +22,8 @@ export class FileBrowserPanelComponent implements OnInit {
 
   public files: File[];
   public currentDirectory: File;
+  public totalFiles: number;
+  public totalDirectories: number;
 
   private selectedFileIndex = 0;
 
@@ -125,6 +127,9 @@ export class FileBrowserPanelComponent implements OnInit {
     this.files.forEach((file: File, index: number) => {
       file.id = this.itemIdentifier + index;
     });
+
+    this.totalDirectories = this.files.filter(f => f.type === FileType.Directory).length;
+    this.totalFiles = this.files.filter(f => f.type === FileType.File).length;
 
     this.resetFileSelection();
     this.selectFile();

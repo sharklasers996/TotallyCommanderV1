@@ -1,5 +1,11 @@
 <div class="top-fb-panel">
-  {{currentDirectory?.fullName}}
+  <div class="fb-tabs">
+    <div class="fb-tab">{{currentDirectory.name}}</div>
+    <div class="fb-tab">{{currentDirectory.name}}2</div>
+  </div>
+  <div>
+    {{currentDirectory?.fullName}}
+  </div>
 </div>
 <div class="fb-panel">
   <div>
@@ -28,4 +34,7 @@
       </tr>
     </table>
   </div>
+</div>
+<div>
+  Selected 0/{{totalFiles}} files and 0/{{totalDirectories}} directories
 </div>
