@@ -118,6 +118,11 @@ export class FileBrowserPanelComponent implements OnInit {
 
   private browse(path: string): void {
 
+    var p = window.require('path');
+    var parentDir = p.resolve(path, '..');
+    console.log(path);
+    console.log(parentDir);
+
     this.files = this.fileBrowser.browse(path);
 
     this.files.forEach((file: File, index: number) => {
