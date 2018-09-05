@@ -2,3 +2,20 @@
 .selected-file {
     background: $color-dark;
 }
+
+.fb-panel {
+    overflow-y: scroll;
+    height: 89vh;
+}
+
+.top-fb-panel {
+    height: 8.5vh;
+}
+
+.fb-tabs {
+    display: flex;
+}
+
+.fb-tab {
+    padding: 10px;
+}

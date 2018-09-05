@@ -1,7 +1,8 @@
 import { FSJetpack, InspectResult } from 'fs-jetpack/types';
-import { Injectable } from '@angular/core';
+import { Injectable, ModuleWithComponentFactories } from '@angular/core';
 import { File } from '../models/file';
 import { FileType } from '../enums/file-type';
+import * as moment from 'moment';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +39,7 @@ export class FileBrowser {
                 inspectFileResult.absolutePath,
                 this.getFileType(inspectFileResult),
                 inspectFileResult.modifyTime,
+                this.getDateTimeString(inspectFileResult.modifyTime),
                 inspectFileResult.size
             );
         });
@@ -68,6 +70,24 @@ export class FileBrowser {
 
             return 0;
         });
+    }
+
+    public getFileInfo(path: string): File {
+        let inspectFileResult = this.jetpack.inspect(path, { times: true, absolutePath: true });
+
+        return new File(
+            inspectFileResult.name,
+            inspectFileResult.absolutePath,
+            this.getFileType(inspectFileResult),
+            inspectFileResult.modifyTime,
+            this.getDateTimeString(inspectFileResult.modifyTime),
+            inspectFileResult.size
+        );
+    }
+
+    private getDateTimeString(date: Date): string {
+        let modifiedAt = moment(date.toString());
+        return modifiedAt.format('YYYY.MM.DD HH:mm:ss');
     }
 
     private getFileType(file: InspectResult): FileType {

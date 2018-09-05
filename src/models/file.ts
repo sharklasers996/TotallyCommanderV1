@@ -9,6 +9,8 @@ export class File {
         public fullName: string,
         public type: FileType,
         public modifiedAt: Date,
+        public modifiedAtString: string,
         public sizeInBytes: Number
     ) { }
+
 }

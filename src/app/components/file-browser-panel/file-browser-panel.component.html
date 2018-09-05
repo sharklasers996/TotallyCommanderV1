@@ -1,26 +1,44 @@
-<div id="desra">
-  <table>
-    <tr>
-      <th class="col-6">
-        Name
-      </th>
-      <th class="col-4">
-        Size
-      </th>
-      <th class="col-4">
-        Date
-      </th>
-    </tr>
-    <tr *ngFor="let file of files" [ngClass]="{ 'selected-file' : file.selected }">
-      <td id="file-{{file.id}}">
-        {{file.name}}
-      </td>
-      <td>
-        {{file.sizeInBytes}}
-      </td>
-      <td>
-        {{file.modifiedAt}}
-      </td>
-    </tr>
-  </table>
+<div class="top-fb-panel">
+  <div class="fb-tabs">
+    <div class="fb-tab">{{currentDirectory.name}}</div>
+    <div class="fb-tab">{{currentDirectory.name}}2</div>
+  </div>
+  <div>
+    {{currentDirectory?.fullName}}
+  </div>
+  <div>
+    <table>
+      <tr>
+        <th class="col-6">
+          Name
+        </th>
+        <th class="col-4">
+          Size
+        </th>
+        <th class="col-4">
+          Date
+        </th>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="fb-panel">
+  <div>
+    <table>
+      <tr *ngFor="let file of files" [ngClass]="{ 'selected-file' : file.selected }">
+        <td id="file-{{file.id}}" class="col-6">
+          {{file.name}}
+        </td>
+        <td class="col-4">
+          {{file.sizeInBytes}}
+        </td>
+        <td class="col-4">
+          {{file.modifiedAtString}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div>
+  Selected 0/{{totalFiles}} files and 0/{{totalDirectories}} directories
 </div>
