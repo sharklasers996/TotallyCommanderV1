@@ -6,6 +6,7 @@ import { KeystrokeServiceService } from '../../services/keystroke-service.servic
 import { Key } from '../../../enums/key';
 import { PanelManagerServiceService } from '../../services/panel-manager-service/panel-manager-service.service';
 import { FileType } from '../../../enums/file-type';
+import { FileBrowserTab } from './models/file-browser-tab';
 
 @Component({
   selector: 'tc-file-browser-panel',
@@ -27,6 +28,13 @@ export class FileBrowserPanelComponent implements OnInit {
 
   private selectedFileIndex = 0;
 
+  public tabs: FileBrowserTab[] = [new FileBrowserTab()];
+  private currentTabIndex: number = 0;
+
+  public get currentTab(): FileBrowserTab {
+    return this.tabs[this.currentTabIndex];
+  }
+
   constructor(
     private fileBrowser: FileBrowser,
     private keystrokeService: KeystrokeServiceService,
@@ -34,33 +42,37 @@ export class FileBrowserPanelComponent implements OnInit {
   }
 
   private keyUp(): void {
-    this.deselectFile();
+    this.currentTab.incrementSelectionIndex();
 
-    if (this.files
-      && this.files.length > 0) {
-      this.selectedFileIndex--;
-      if (this.selectedFileIndex < 0) {
-        this.selectedFileIndex = 0;
-      }
-    }
+    // this.deselectFile();
 
-    this.selectFile();
-    this.scrollToItem(true);
+    // if (this.files
+    //   && this.files.length > 0) {
+    //   this.selectedFileIndex--;
+    //   if (this.selectedFileIndex < 0) {
+    //     this.selectedFileIndex = 0;
+    //   }
+    // }
+
+    // this.selectFile();
+    // this.scrollToItem(true);
   }
 
   private keyDown(): void {
-    this.deselectFile();
+    this.currentTab.decrementSelectionIndex();
 
-    if (this.files
-      && this.files.length > 0) {
-      this.selectedFileIndex++;
-      if (this.selectedFileIndex >= this.files.length) {
-        this.selectedFileIndex = this.files.length - 1;
-      }
-    }
+    // this.deselectFile();
 
-    this.selectFile();
-    this.scrollToItem(false);
+    // if (this.files
+    //   && this.files.length > 0) {
+    //   this.selectedFileIndex++;
+    //   if (this.selectedFileIndex >= this.files.length) {
+    //     this.selectedFileIndex = this.files.length - 1;
+    //   }
+    // }
+
+    // this.selectFile();
+    // this.scrollToItem(false);
   }
 
   ngOnInit() {
@@ -89,39 +101,105 @@ export class FileBrowserPanelComponent implements OnInit {
     this.keystrokeService
       .bind(Key.Tab, this.panelType)
       .subscribe(() => {
-        this.deselectFile();
+        // this.deselectFile();
+        this.currentTab.deselectFile();
         this.panelManagerService.setCurrentPanel(this.opositePanelType);
       });
 
     this.keystrokeService
       .bind(Key.Enter, this.panelType)
       .subscribe(() => {
-        if (!this.files
-          || this.files.length === 0) {
-          return;
+        let selectedFile = this.currentTab.getSelectedFile();
+        if (selectedFile
+          && selectedFile.type === FileType.Directory) {
+          this.browse(selectedFile.fullName);
         }
 
-        let currentFile = this.files[this.selectedFileIndex];
-        if (currentFile.type === FileType.Directory) {
-          this.browse(currentFile.fullName);
-        }
+        // if (!this.files
+        //   || this.files.length === 0) {
+        //   return;
+        // }
+
+        // let currentFile = this.files[this.selectedFileIndex];
+        // if (currentFile.type === FileType.Directory) {
+        //   this.browse(currentFile.fullName);
+        // }
+      });
+
+    this.keystrokeService
+      .bind(Key.Backspace, this.panelType)
+      .subscribe(() => {
+        let p = window.require('path');
+        let parentDir = p.resolve(this.currentTab.currentDirectory.fullName, '..');
+        this.browse(parentDir);
+      });
+
+
+    this.keystrokeService
+      .bind(Key.Ctrl_T, this.panelType)
+      .subscribe(() => {
+        let newTab = new FileBrowserTab();
+        this.tabs.push(newTab);
+        this.currentTabIndex = this.tabs.length - 1;
+        this.selectTab();
+        this.browse(this.currentDirectory.fullName);
+      });
+
+    this.keystrokeService
+      .bind(Key.Ctrl_Tab, this.panelType)
+      .subscribe(() => {
+        this.incrementTabSelectionIndex();
+      });
+
+    this.keystrokeService
+      .bind(Key.Ctrl_Shift_Tab, this.panelType)
+      .subscribe(() => {
+        this.decerementTabSelectionIndex();
       });
 
     this.panelManagerService.panelChanged.subscribe((panel) => {
       if (panel === this.panelType) {
-        this.selectFile();
+        // this.selectFile();
+        this.currentTab.selectFile();
       }
     });
 
     if (this.panelManagerService.currentPanel === this.panelType) {
-      this.selectFile();
+      // this.selectFile();
+      this.currentTab.selectFile();
     }
+  }
+
+  private incrementTabSelectionIndex(): void {
+    this.currentTabIndex++;
+    if (this.currentTabIndex >= this.tabs.length) {
+      this.currentTabIndex = 0;
+    }
+
+    this.selectTab();
+  }
+
+  private decerementTabSelectionIndex(): void {
+    this.currentTabIndex--;
+    if (this.currentTabIndex < 0) {
+      this.currentTabIndex = this.tabs.length - 1;
+    }
+
+    this.selectTab();
+  }
+
+  private selectTab() {
+    this.tabs.forEach(t => {
+      t.selected = false;
+    });
+
+    this.tabs[this.currentTabIndex].selected = true;
   }
 
   private browse(path: string): void {
 
-    var p = window.require('path');
-    var parentDir = p.resolve(path, '..');
+    let p = window.require('path');
+    let parentDir = p.resolve(path, '..');
     console.log(path);
     console.log(parentDir);
 
@@ -130,14 +208,18 @@ export class FileBrowserPanelComponent implements OnInit {
     this.files = this.fileBrowser.browse(path);
 
     this.files.forEach((file: File, index: number) => {
-      file.id = this.itemIdentifier + index;
+      file.id = this.itemIdentifier + this.currentTabIndex + index;
     });
 
-    this.totalDirectories = this.files.filter(f => f.type === FileType.Directory).length;
-    this.totalFiles = this.files.filter(f => f.type === FileType.File).length;
+    this.currentTab.setFiles(this.files);
+    this.currentTab.setCurrentDirectory(this.currentDirectory);
+    this.selectTab();
 
-    this.resetFileSelection();
-    this.selectFile();
+    // this.totalDirectories = this.files.filter(f => f.type === FileType.Directory).length;
+    // this.totalFiles = this.files.filter(f => f.type === FileType.File).length;
+
+    // this.resetFileSelection();
+    // this.selectFile();
   }
 
   private resetFileSelection(): void {

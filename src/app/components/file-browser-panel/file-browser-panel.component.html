@@ -1,10 +1,9 @@
 <div class="top-fb-panel">
   <div class="fb-tabs">
-    <div class="fb-tab">{{currentDirectory.name}}</div>
-    <div class="fb-tab">{{currentDirectory.name}}2</div>
+    <div *ngFor="let tab of tabs" class="fb-tab" [ngClass]="{ 'fb-tab-selected' : tab.selected }">{{tab.currentDirectory.name}}</div>
   </div>
   <div>
-    {{currentDirectory?.fullName}}
+    {{currentTab.currentDirectory?.fullName}}
   </div>
   <div>
     <table>
@@ -25,7 +24,7 @@
 <div class="fb-panel">
   <div>
     <table>
-      <tr *ngFor="let file of files" [ngClass]="{ 'selected-file' : file.selected }">
+      <tr *ngFor="let file of currentTab.files" [ngClass]="{ 'selected-file' : file.selected }">
         <td id="file-{{file.id}}" class="col-6">
           {{file.name}}
         </td>
@@ -40,5 +39,5 @@
   </div>
 </div>
 <div>
-  Selected 0/{{totalFiles}} files and 0/{{totalDirectories}} directories
+  Selected 0/{{currentTab.totalFiles}} files and 0/{{currentTab.totalDirectories}} directories
 </div>

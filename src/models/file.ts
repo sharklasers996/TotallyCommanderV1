@@ -13,4 +13,13 @@ export class File {
         public sizeInBytes: Number
     ) { }
 
+    public clone(): File {
+        return new File(
+            this.name,
+            this.fullName,
+            this.type,
+            this.modifiedAt,
+            this.modifiedAtString,
+            this.sizeInBytes);
+    }
 }
