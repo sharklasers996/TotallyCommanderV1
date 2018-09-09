@@ -187,11 +187,10 @@ export class FileBrowserPanelComponent implements OnInit {
 
   private selectTab() {
     this.tabs.forEach(t => {
-      t.selected = false;
+      t.active = false;
     });
 
-    this.tabs[this.currentTabIndex].selected = true;
-    this.tabs[this.currentTabIndex].scrollIntoView();
+    this.tabs[this.currentTabIndex].activeTab();
   }
 
   private browse(path: string): void {

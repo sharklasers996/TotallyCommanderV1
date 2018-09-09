@@ -2,13 +2,15 @@ import { File } from '../../../../models/file';
 import { FileType } from '../../../../enums/file-type';
 
 export class FileBrowserTab {
-    public selected: boolean = false;
+    public active: boolean = false;
     public files: File[];
     public currentDirectory: File;
     public totalFiles: number;
     public totalDirectories: number;
 
     private selectedFileIndex = 0;
+
+    private lastScrollPosition: number = 0;
 
     constructor() { }
 
@@ -32,6 +34,11 @@ export class FileBrowserTab {
         }
 
         return this.files[this.selectedFileIndex];
+    }
+
+    public activeTab(): void {
+        this.active = true;
+        this.scrollToLastPosition();
     }
 
     public goToBeginningOfList(): void {
@@ -102,17 +109,16 @@ export class FileBrowserTab {
         this.selectedFileIndex = 0;
     }
 
-    public scrollIntoView(): void {
+    public scrollToLastPosition(): void {
         if (this.files
             && this.files.length > 0) {
             let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
             if (el) {
                 let parent = this.findScrollableParent(el);
-                let scrollHeight = el.offsetTop - parent.clientHeight + el.clientHeight;
-                parent.scrollTop = scrollHeight;
+                parent.scrollTop = this.lastScrollPosition;
             } else {
                 setTimeout(() => {
-                    this.scrollIntoView();
+                    this.scrollToLastPosition();
                 }, 1);
             }
         }
@@ -128,6 +134,8 @@ export class FileBrowserTab {
             let scrollHeight = el.offsetTop - parent.clientHeight + el.clientHeight;
             parent.scrollTop = scrollHeight;
         }
+
+        this.lastScrollPosition = parent.scrollTop;
     }
 
     private shouldScrollDown(el): boolean {
@@ -147,9 +155,10 @@ export class FileBrowserTab {
     }
 
     private findScrollableParent(element: HTMLElement): HTMLElement {
-        let isBody: boolean,
-            hasScrollableSpace: boolean,
-            hasVisibleOverflow: boolean;
+        let isBody: boolean;
+        let hasScrollableSpace: boolean;
+        let hasVisibleOverflow: boolean;
+
         do {
             element = element.parentElement;
             isBody = element === document.body;

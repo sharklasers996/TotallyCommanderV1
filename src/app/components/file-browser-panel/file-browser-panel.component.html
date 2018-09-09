@@ -1,6 +1,6 @@
 <div class="top-fb-panel">
   <div class="fb-tabs">
-    <div *ngFor="let tab of tabs" class="fb-tab" [ngClass]="{ 'fb-tab-selected' : tab.selected }">{{tab.currentDirectory.name}}</div>
+    <div *ngFor="let tab of tabs" class="fb-tab" [ngClass]="{ 'fb-tab-active' : tab.active }">{{tab.currentDirectory.name}}</div>
   </div>
   <div>
     {{currentTab.currentDirectory?.fullName}}
