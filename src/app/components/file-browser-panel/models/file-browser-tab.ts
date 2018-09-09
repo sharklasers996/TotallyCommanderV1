@@ -104,26 +104,30 @@ export class FileBrowserTab {
 
     private scrollToItem(up: boolean): void {
         let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
+        let parent = this.findScrollableParent(el);
 
-        if (!this.isElementInViewport(el)) {
-            if (up) {
-                el.scrollIntoView();
-            } else {
-                let parent = this.findScrollableParent(el);
-                let scrollHeight = el.offsetTop - parent.clientHeight + el.clientHeight;
-                parent.scrollTop = scrollHeight;
-            }
+        if (up && this.shouldScrollUp(el)) {
+            parent.scrollTop = el.offsetTop;
+        } else if (this.shouldScrollDown(el)) {
+            let scrollHeight = el.offsetTop - parent.clientHeight + el.clientHeight;
+            parent.scrollTop = scrollHeight;
         }
     }
 
-    private isElementInViewport(el): boolean {
+    private shouldScrollDown(el): boolean {
         let rect = el.getBoundingClientRect();
-        return (
-            rect.top >= 0 &&
-            rect.left >= 0 &&
-            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-        );
+        let parent = this.findScrollableParent(el);
+        let parentRect = parent.getBoundingClientRect();
+
+        return rect.bottom - parentRect.top >= parent.clientHeight;
+    }
+
+    private shouldScrollUp(el): boolean {
+        let rect = el.getBoundingClientRect();
+        let parent = this.findScrollableParent(el);
+        let parentRect = parent.getBoundingClientRect();
+
+        return rect.top < parentRect.top;
     }
 
     private findScrollableParent(element: HTMLElement): HTMLElement {
