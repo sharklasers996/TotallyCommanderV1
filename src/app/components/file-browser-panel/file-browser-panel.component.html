@@ -25,8 +25,11 @@
   <div>
     <table>
       <tr *ngFor="let file of currentTab.files" [ngClass]="{ 'selected-file' : file.selected }">
-        <td id="file-{{file.id}}" class="col-6">
-          {{file.name}}
+        <td id="file-{{file.id}}" class="col-5">
+          {{file.nameWithoutExtesion}}
+        </td>
+        <td class="col-1">
+          {{file.extension}}
         </td>
         <td class="col-4">
           {{file.sizeInBytes}}

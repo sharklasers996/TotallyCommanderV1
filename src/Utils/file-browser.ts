@@ -30,46 +30,56 @@ export class FileBrowser {
 
         let list = this.jetpack.list(path);
 
-        let files = list.map(file => {
-
-            let inspectFileResult = this.jetpack.inspect(path + file, { times: true, absolutePath: true });
-
-            return new File(
-                inspectFileResult.name,
-                inspectFileResult.absolutePath,
-                this.getFileType(inspectFileResult),
-                inspectFileResult.modifyTime,
-                this.getDateTimeString(inspectFileResult.modifyTime),
-                inspectFileResult.size
-            );
+        let fileInfoList = list.map(file => {
+            return this.getFileInfo(path + file);
         });
+
+        let files = fileInfoList.filter(fileInfo => (fileInfo.type === FileType.File || fileInfo.type === FileType.Symlink));
+        let directories = fileInfoList.filter(fileInfo => fileInfo.type === FileType.Directory);
 
         files = files
             .sort((a: File, b: File) => {
-                if (a.name < b.name) {
+                let aChars = this.getFirstTwoCharsLowerCase(a.name);
+                let bChars = this.getFirstTwoCharsLowerCase(b.name);
+
+                if (aChars < bChars) {
                     return -1;
                 }
-                if (a.name > b.name) {
+
+                if (aChars > bChars) {
                     return 1;
                 }
 
                 return 0;
             });
 
+        directories = directories
+            .sort((a: File, b: File) => {
+                let aChars = this.getFirstTwoCharsLowerCase(a.name);
+                let bChars = this.getFirstTwoCharsLowerCase(b.name);
 
-        return files.sort((a: File, b: File) => {
-            if (a.type === FileType.File
-                && b.type === FileType.Directory) {
-                return 1;
-            }
+                if (aChars < bChars) {
+                    return -1;
+                }
 
-            if (a.type === FileType.Directory
-                && b.type === FileType.File) {
-                return -1;
-            }
+                if (aChars > bChars) {
+                    return 1;
+                }
 
-            return 0;
-        });
+                return 0;
+            });
+
+        return directories.concat(files);
+    }
+
+    private getFirstTwoCharsLowerCase(input: string): string {
+        if (input.length < 2) {
+            return input.toLowerCase();
+        }
+
+        return input
+            .substring(0, 2)
+            .toLowerCase();
     }
 
     public getFileInfo(path: string): File {
@@ -77,12 +87,45 @@ export class FileBrowser {
 
         return new File(
             inspectFileResult.name,
+            this.getFilenameWithoutExtension(inspectFileResult),
+            this.getFilenameExtension(inspectFileResult),
             inspectFileResult.absolutePath,
             this.getFileType(inspectFileResult),
             inspectFileResult.modifyTime,
             this.getDateTimeString(inspectFileResult.modifyTime),
             inspectFileResult.size
         );
+    }
+
+    private getFilenameExtension(inspectFileresult: InspectResult): string {
+        if (this.getFileType(inspectFileresult) !== FileType.File) {
+            return '<dir>';
+        }
+
+        let lastIndexOfDot = inspectFileresult.name.lastIndexOf('.');
+        if (lastIndexOfDot > 0) {
+            let extension = inspectFileresult.name.substring(lastIndexOfDot + 1);
+            if (extension.length === inspectFileresult.name.length) {
+                return '';
+            }
+
+            return inspectFileresult.name.substring(lastIndexOfDot + 1);
+        }
+
+        return '';
+    }
+
+    private getFilenameWithoutExtension(inspectFileResult: InspectResult): string {
+        if (this.getFileType(inspectFileResult) !== FileType.File) {
+            return inspectFileResult.name;
+        }
+
+        let lastIndexOfDot = inspectFileResult.name.lastIndexOf('.');
+        if (lastIndexOfDot > 0) {
+            return inspectFileResult.name.substring(0, lastIndexOfDot);
+        }
+
+        return inspectFileResult.name;
     }
 
     private getDateTimeString(date: Date): string {

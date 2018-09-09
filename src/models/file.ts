@@ -6,6 +6,8 @@ export class File {
 
     constructor(
         public name: string,
+        public nameWithoutExtesion: string,
+        public extension: string,
         public fullName: string,
         public type: FileType,
         public modifiedAt: Date,
@@ -16,6 +18,8 @@ export class File {
     public clone(): File {
         return new File(
             this.name,
+            this.nameWithoutExtesion,
+            this.extension,
             this.fullName,
             this.type,
             this.modifiedAt,
