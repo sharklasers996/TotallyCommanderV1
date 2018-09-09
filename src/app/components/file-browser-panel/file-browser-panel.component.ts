@@ -194,6 +194,7 @@ export class FileBrowserPanelComponent implements OnInit {
     });
 
     this.tabs[this.currentTabIndex].selected = true;
+    this.tabs[this.currentTabIndex].scrollIntoView();
   }
 
   private browse(path: string): void {

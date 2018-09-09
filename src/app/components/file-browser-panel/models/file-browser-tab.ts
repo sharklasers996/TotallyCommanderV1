@@ -86,6 +86,19 @@ export class FileBrowserTab {
         this.selectedFileIndex = 0;
     }
 
+    public scrollIntoView(): void {
+        if (this.files) {
+            let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
+            if (el) {
+                el.scrollIntoView();
+            } else {
+                setTimeout(() => {
+                    this.scrollIntoView();
+                }, 100);
+            }
+        }
+    }
+
     private scrollToItem(up: boolean): void {
         let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
 
