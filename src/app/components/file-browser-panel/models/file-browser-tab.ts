@@ -34,12 +34,16 @@ export class FileBrowserTab {
         return this.files[this.selectedFileIndex];
     }
 
-    public incrementSelectionIndex(): void {
+    public incrementSelectionIndex(itemCount: number = null): void {
+        if (itemCount === null) {
+            itemCount = 1;
+        }
+
         this.deselectFile();
 
         if (this.files
             && this.files.length > 0) {
-            this.selectedFileIndex--;
+            this.selectedFileIndex -= itemCount;
             if (this.selectedFileIndex < 0) {
                 this.selectedFileIndex = 0;
             }
@@ -49,12 +53,16 @@ export class FileBrowserTab {
         this.scrollToItem(true);
     }
 
-    public decrementSelectionIndex(): void {
+    public decrementSelectionIndex(itemCount: number = null): void {
+        if (itemCount === null) {
+            itemCount = 1;
+        }
+
         this.deselectFile();
 
         if (this.files
             && this.files.length > 0) {
-            this.selectedFileIndex++;
+            this.selectedFileIndex += itemCount;
             if (this.selectedFileIndex >= this.files.length) {
                 this.selectedFileIndex = this.files.length - 1;
             }

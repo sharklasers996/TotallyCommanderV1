@@ -26,10 +26,10 @@ export class FileBrowserPanelComponent implements OnInit {
   public totalFiles: number;
   public totalDirectories: number;
 
-  private selectedFileIndex = 0;
-
   public tabs: FileBrowserTab[] = [new FileBrowserTab()];
   private currentTabIndex: number = 0;
+
+  private readonly pageSize: number = 10;
 
   public get currentTab(): FileBrowserTab {
     return this.tabs[this.currentTabIndex];
@@ -39,14 +39,6 @@ export class FileBrowserPanelComponent implements OnInit {
     private fileBrowser: FileBrowser,
     private keystrokeService: KeystrokeServiceService,
     private panelManagerService: PanelManagerServiceService) {
-  }
-
-  private keyUp(): void {
-    this.currentTab.incrementSelectionIndex();
-  }
-
-  private keyDown(): void {
-    this.currentTab.decrementSelectionIndex();
   }
 
   ngOnInit() {
@@ -63,19 +55,30 @@ export class FileBrowserPanelComponent implements OnInit {
     this.keystrokeService
       .bind(Key.Up, this.panelType)
       .subscribe(() => {
-        this.keyUp();
+        this.currentTab.incrementSelectionIndex();
       });
 
     this.keystrokeService
       .bind(Key.Down, this.panelType)
       .subscribe(() => {
-        this.keyDown();
+        this.currentTab.decrementSelectionIndex();
+      });
+
+    this.keystrokeService
+      .bind(Key.PageUp, this.panelType)
+      .subscribe(() => {
+        this.currentTab.incrementSelectionIndex(this.pageSize);
+      });
+
+    this.keystrokeService
+      .bind(Key.PageDown, this.panelType)
+      .subscribe(() => {
+        this.currentTab.decrementSelectionIndex(this.pageSize);
       });
 
     this.keystrokeService
       .bind(Key.Tab, this.panelType)
       .subscribe(() => {
-        // this.deselectFile();
         this.currentTab.deselectFile();
         this.panelManagerService.setCurrentPanel(this.opositePanelType);
       });

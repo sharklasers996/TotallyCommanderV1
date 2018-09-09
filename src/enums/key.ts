@@ -8,4 +8,6 @@ export class Key {
     public static readonly Ctrl_Shift_Tab: string = 'ctrl+shift+tab';
     public static readonly Backspace: string = 'backspace';
     public static readonly Ctrl_W: string = 'ctrl+w';
+    public static readonly PageUp: string = 'pageup';
+    public static readonly PageDown: string = 'pagedown';
 }
