@@ -87,14 +87,15 @@ export class FileBrowserTab {
     }
 
     public scrollIntoView(): void {
-        if (this.files) {
+        if (this.files
+            && this.files.length > 0) {
             let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
             if (el) {
                 el.scrollIntoView();
             } else {
                 setTimeout(() => {
                     this.scrollIntoView();
-                }, 100);
+                }, 10);
             }
         }
     }

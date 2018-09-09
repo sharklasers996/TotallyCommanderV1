@@ -157,6 +157,26 @@ export class FileBrowserPanelComponent implements OnInit {
         this.decerementTabSelectionIndex();
       });
 
+    this.keystrokeService
+      .bind(Key.Ctrl_W, this.panelType)
+      .subscribe(() => {
+        if (this.tabs.length === 1) {
+          return;
+        }
+
+        this.tabs = this.tabs.filter((tab, currentIndex) => {
+          if (currentIndex !== this.currentTabIndex) {
+            return tab;
+          }
+        });
+
+        if (this.currentTabIndex >= this.tabs.length) {
+          this.currentTabIndex--;
+        }
+
+        this.selectTab();
+      });
+
     this.panelManagerService.panelChanged.subscribe((panel) => {
       if (panel === this.panelType) {
         // this.selectFile();

@@ -7,4 +7,5 @@ export class Key {
     public static readonly Ctrl_Tab: string = 'ctrl+tab';
     public static readonly Ctrl_Shift_Tab: string = 'ctrl+shift+tab';
     public static readonly Backspace: string = 'backspace';
+    public static readonly Ctrl_W: string = 'ctrl+w';
 }
