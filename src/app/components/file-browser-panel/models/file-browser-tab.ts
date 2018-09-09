@@ -34,6 +34,14 @@ export class FileBrowserTab {
         return this.files[this.selectedFileIndex];
     }
 
+    public goToBeginningOfList(): void {
+        this.incrementSelectionIndex(this.files.length);
+    }
+
+    public goToEndOfList(): void {
+        this.decrementSelectionIndex(this.files.length);
+    }
+
     public incrementSelectionIndex(itemCount: number = null): void {
         if (itemCount === null) {
             itemCount = 1;

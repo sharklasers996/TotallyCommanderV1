@@ -10,4 +10,6 @@ export class Key {
     public static readonly Ctrl_W: string = 'ctrl+w';
     public static readonly PageUp: string = 'pageup';
     public static readonly PageDown: string = 'pagedown';
+    public static readonly End: string = 'end';
+    public static readonly Home: string = 'home';
 }

@@ -77,6 +77,18 @@ export class FileBrowserPanelComponent implements OnInit {
       });
 
     this.keystrokeService
+      .bind(Key.Home, this.panelType)
+      .subscribe(() => {
+        this.currentTab.goToBeginningOfList();
+      });
+
+    this.keystrokeService
+      .bind(Key.End, this.panelType)
+      .subscribe(() => {
+        this.currentTab.goToEndOfList();
+      });
+
+    this.keystrokeService
       .bind(Key.Tab, this.panelType)
       .subscribe(() => {
         this.currentTab.deselectFile();
