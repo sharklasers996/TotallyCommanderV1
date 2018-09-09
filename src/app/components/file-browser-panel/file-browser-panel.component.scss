@@ -24,3 +24,31 @@
 .fb-tab-active {
     background: $color-dark;
 }
+
+.col-name {
+    max-width: 50vh;
+    min-width: 50vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.col-extension {
+    max-width: 10vh;
+    min-width: 10vh;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.col-size {
+    width: 8vh;
+}
+
+.col-modified-at {}
+
+.file-table {
+    >tbody>tr>td {
+        white-space: nowrap;
+    }
+}

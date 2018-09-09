@@ -23,18 +23,18 @@
 </div>
 <div class="fb-panel">
   <div>
-    <table>
+    <table class="file-table">
       <tr *ngFor="let file of currentTab.files" [ngClass]="{ 'selected-file' : file.selected }">
-        <td id="file-{{file.id}}" class="col-5">
+        <td id="file-{{file.id}}" class="col-name">
           {{file.nameWithoutExtesion}}
         </td>
-        <td class="col-1">
+        <td class="col-extension">
           {{file.extension}}
         </td>
-        <td class="col-4">
+        <td class="col-size">
           {{file.sizeInBytes}}
         </td>
-        <td class="col-4">
+        <td class="col-modified-at">
           {{file.modifiedAtString}}
         </td>
       </tr>
