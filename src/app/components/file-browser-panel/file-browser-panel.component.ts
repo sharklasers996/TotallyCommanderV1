@@ -43,36 +43,10 @@ export class FileBrowserPanelComponent implements OnInit {
 
   private keyUp(): void {
     this.currentTab.incrementSelectionIndex();
-
-    // this.deselectFile();
-
-    // if (this.files
-    //   && this.files.length > 0) {
-    //   this.selectedFileIndex--;
-    //   if (this.selectedFileIndex < 0) {
-    //     this.selectedFileIndex = 0;
-    //   }
-    // }
-
-    // this.selectFile();
-    // this.scrollToItem(true);
   }
 
   private keyDown(): void {
     this.currentTab.decrementSelectionIndex();
-
-    // this.deselectFile();
-
-    // if (this.files
-    //   && this.files.length > 0) {
-    //   this.selectedFileIndex++;
-    //   if (this.selectedFileIndex >= this.files.length) {
-    //     this.selectedFileIndex = this.files.length - 1;
-    //   }
-    // }
-
-    // this.selectFile();
-    // this.scrollToItem(false);
   }
 
   ngOnInit() {
@@ -114,16 +88,6 @@ export class FileBrowserPanelComponent implements OnInit {
           && selectedFile.type === FileType.Directory) {
           this.browse(selectedFile.fullName);
         }
-
-        // if (!this.files
-        //   || this.files.length === 0) {
-        //   return;
-        // }
-
-        // let currentFile = this.files[this.selectedFileIndex];
-        // if (currentFile.type === FileType.Directory) {
-        //   this.browse(currentFile.fullName);
-        // }
       });
 
     this.keystrokeService
@@ -179,13 +143,11 @@ export class FileBrowserPanelComponent implements OnInit {
 
     this.panelManagerService.panelChanged.subscribe((panel) => {
       if (panel === this.panelType) {
-        // this.selectFile();
         this.currentTab.selectFile();
       }
     });
 
     if (this.panelManagerService.currentPanel === this.panelType) {
-      // this.selectFile();
       this.currentTab.selectFile();
     }
   }
@@ -235,70 +197,5 @@ export class FileBrowserPanelComponent implements OnInit {
     this.currentTab.setFiles(this.files);
     this.currentTab.setCurrentDirectory(this.currentDirectory);
     this.selectTab();
-
-    // this.totalDirectories = this.files.filter(f => f.type === FileType.Directory).length;
-    // this.totalFiles = this.files.filter(f => f.type === FileType.File).length;
-
-    // this.resetFileSelection();
-    // this.selectFile();
-  }
-
-  private resetFileSelection(): void {
-    this.selectedFileIndex = 0;
-  }
-
-  private findScrollableParent(element: HTMLElement): HTMLElement {
-    let isBody: boolean,
-      hasScrollableSpace: boolean,
-      hasVisibleOverflow: boolean;
-    do {
-      element = element.parentElement;
-      isBody = element === document.body;
-      hasScrollableSpace = element.clientHeight < element.scrollHeight;
-      hasVisibleOverflow = getComputedStyle(element, null).overflow === 'visible';
-    } while (!isBody && !(hasScrollableSpace && !hasVisibleOverflow));
-    return element;
-  }
-
-  private deselectFile(): void {
-    if (!this.files
-      || this.files.length === 0) {
-      return;
-    }
-
-    this.files[this.selectedFileIndex].selected = false;
-  }
-
-  private selectFile(): void {
-    if (!this.files
-      || this.files.length === 0) {
-      return;
-    }
-
-    this.files[this.selectedFileIndex].selected = true;
-  }
-
-  private scrollToItem(up: boolean): void {
-    let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
-
-    if (!this.isElementInViewport(el)) {
-      if (up) {
-        el.scrollIntoView();
-      } else {
-        let parent = this.findScrollableParent(el);
-        let scrollHeight = el.offsetTop - parent.clientHeight + el.clientHeight;
-        parent.scrollTop = scrollHeight;
-      }
-    }
-  }
-
-  isElementInViewport(el): boolean {
-    let rect = el.getBoundingClientRect();
-    return (
-      rect.top >= 0 &&
-      rect.left >= 0 &&
-      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-    );
   }
 }
