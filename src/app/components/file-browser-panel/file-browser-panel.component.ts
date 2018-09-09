@@ -162,8 +162,8 @@ export class FileBrowserPanelComponent implements OnInit {
       }
     });
 
-    if (this.panelManagerService.currentPanel === this.panelType) {
-      this.currentTab.selectFile();
+    if (this.panelManagerService.currentPanel !== this.panelType) {
+      this.currentTab.deselectFile();
     }
   }
 

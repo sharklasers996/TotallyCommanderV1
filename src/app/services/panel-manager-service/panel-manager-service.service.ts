@@ -5,7 +5,7 @@ import { PanelType } from '../../../enums/panel-type';
   providedIn: 'root'
 })
 export class PanelManagerServiceService {
-  public currentPanel: PanelType = PanelType.LeftFileBrowserPanel;
+  public currentPanel: PanelType = PanelType.RightFileBrowserPanel;
 
   @Output()
   public panelChanged: EventEmitter<PanelType> = new EventEmitter();
