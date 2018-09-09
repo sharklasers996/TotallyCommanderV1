@@ -26,6 +26,7 @@
 }
 
 .col-name {
+    color: $color-accent-1;
     max-width: 50vh;
     min-width: 50vh;
     overflow: hidden;
@@ -34,6 +35,7 @@
 }
 
 .col-extension {
+    color: $color-accent-2;
     max-width: 10vh;
     min-width: 10vh;
     overflow: hidden;
@@ -42,10 +44,13 @@
 }
 
 .col-size {
+    color: $color-accent-4;
     width: 8vh;
 }
 
-.col-modified-at {}
+.col-modified-at {
+    color: $color-accent-3;
+}
 
 .file-table {
     >tbody>tr>td {
