@@ -91,11 +91,13 @@ export class FileBrowserTab {
             && this.files.length > 0) {
             let el = document.getElementById('file-' + this.files[this.selectedFileIndex].id);
             if (el) {
-                el.scrollIntoView();
+                let parent = this.findScrollableParent(el);
+                let scrollHeight = el.offsetTop - parent.clientHeight + el.clientHeight;
+                parent.scrollTop = scrollHeight;
             } else {
                 setTimeout(() => {
                     this.scrollIntoView();
-                }, 10);
+                }, 1);
             }
         }
     }
