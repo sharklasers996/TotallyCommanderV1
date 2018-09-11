@@ -8,7 +8,6 @@ import { PanelManagerServiceService } from '../../services/panel-manager-service
 import { FileType } from '../../../enums/file-type';
 import { FileBrowserTab } from './models/file-browser-tab';
 import { RenameFileTextBoxComponent } from '../../rename-file-text-box/rename-file-text-box.component';
-import { bypassSanitizationTrustHtml } from '@angular/core/src/sanitization/bypass';
 
 @Component({
   selector: 'tc-file-browser-panel',
@@ -117,7 +116,11 @@ export class FileBrowserPanelComponent implements OnInit {
       .subscribe(() => {
         let p = window.require('path');
         let parentDir = p.resolve(this.currentTab.currentDirectory.fullName, '..');
+
+        let prevDir = this.currentTab.currentDirectory.name;
         this.browse(parentDir);
+
+        this.currentTab.selectFileByName(prevDir);
       });
 
 
@@ -166,7 +169,6 @@ export class FileBrowserPanelComponent implements OnInit {
     this.keystrokeService
       .bind(Key.F2, this.panelType)
       .subscribe(() => {
-        console.log('op');
         this.showInput();
       });
 
@@ -216,8 +218,7 @@ export class FileBrowserPanelComponent implements OnInit {
 
     this.currentDirectory = this.fileBrowser.getFileInfo(path);
 
-    this.files = this.fileBrowser.browse(path);
-
+    this.files = this.fileBrowser.browse(path)
     this.files.forEach((file: File, index: number) => {
       file.id = this.itemIdentifier + this.currentTabIndex + index;
     });

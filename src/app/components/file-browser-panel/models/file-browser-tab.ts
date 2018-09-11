@@ -96,6 +96,12 @@ export class FileBrowserTab {
         this.files[this.selectedFileIndex].selected = true;
     }
 
+    public selectFileByName(name: string): void {
+        this.deselectFile();
+        this.selectedFileIndex = this.files.findIndex(file => file.name === name);
+        this.selectFile();
+    }
+
     public deselectFile(): void {
         if (!this.files
             || this.files.length === 0) {
