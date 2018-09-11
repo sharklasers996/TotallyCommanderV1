@@ -27,8 +27,8 @@
 
 .col-name {
     color: $color-accent-1;
-    max-width: 50vh;
-    min-width: 50vh;
+    max-width: $col-name-width;
+    min-width: $col-name-width;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -36,8 +36,8 @@
 
 .col-extension {
     color: $color-accent-2;
-    max-width: 10vh;
-    min-width: 10vh;
+    max-width: $col-extension-width;
+    min-width: $col-extension-width;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -45,11 +45,26 @@
 
 .col-size {
     color: $color-accent-4;
-    width: 8vh;
+    width: $col-size-width;
 }
 
 .col-modified-at {
     color: $color-accent-3;
+}
+
+.col-name-header {
+    max-width: $col-name-width;
+    min-width: $col-name-width;
+}
+
+.col-extension {
+    max-width: $col-extension-width;
+    min-width: $col-extension-width;
+}
+
+.col-size {
+    color: $color-accent-4;
+    width: $col-size-width;
 }
 
 .file-table {

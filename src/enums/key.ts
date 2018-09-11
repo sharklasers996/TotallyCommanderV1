@@ -12,4 +12,6 @@ export class Key {
     public static readonly PageDown: string = 'pagedown';
     public static readonly End: string = 'end';
     public static readonly Home: string = 'home';
+    public static readonly Escape: string = 'esc';
+    public static readonly F2: string = 'f2';
 }

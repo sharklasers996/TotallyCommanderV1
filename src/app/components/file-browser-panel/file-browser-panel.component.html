@@ -8,13 +8,16 @@
   <div>
     <table>
       <tr>
-        <th class="col-6">
+        <th class="col-name-header">
           Name
         </th>
-        <th class="col-4">
+        <th class="col-extension-header">
+          Extension
+        </th>
+        <th class="col-size-header">
           Size
         </th>
-        <th class="col-4">
+        <th class="col-modified-at-header">
           Date
         </th>
       </tr>
@@ -40,6 +43,7 @@
       </tr>
     </table>
   </div>
+  <tc-rename-file-text-box></tc-rename-file-text-box>
 </div>
 <div>
   Selected 0/{{currentTab.totalFiles}} files and 0/{{currentTab.totalDirectories}} directories

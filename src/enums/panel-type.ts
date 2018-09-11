@@ -1,4 +1,5 @@
 export enum PanelType {
     LeftFileBrowserPanel,
-    RightFileBrowserPanel
+    RightFileBrowserPanel,
+    RenameFileTextbox
 }

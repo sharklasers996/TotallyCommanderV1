@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FileBrowser } from '../../../Utils/file-browser';
 import { File } from '../../../models/file';
 import { PanelType } from '../../../enums/panel-type';
@@ -7,6 +7,8 @@ import { Key } from '../../../enums/key';
 import { PanelManagerServiceService } from '../../services/panel-manager-service/panel-manager-service.service';
 import { FileType } from '../../../enums/file-type';
 import { FileBrowserTab } from './models/file-browser-tab';
+import { RenameFileTextBoxComponent } from '../../rename-file-text-box/rename-file-text-box.component';
+import { bypassSanitizationTrustHtml } from '@angular/core/src/sanitization/bypass';
 
 @Component({
   selector: 'tc-file-browser-panel',
@@ -14,6 +16,8 @@ import { FileBrowserTab } from './models/file-browser-tab';
   styleUrls: ['./file-browser-panel.component.scss']
 })
 export class FileBrowserPanelComponent implements OnInit {
+
+  @ViewChild(RenameFileTextBoxComponent) renameFileTextbox: RenameFileTextBoxComponent;
 
   @Input()
   public panelType: PanelType;
@@ -30,6 +34,9 @@ export class FileBrowserPanelComponent implements OnInit {
   private currentTabIndex: number = 0;
 
   private readonly pageSize: number = 10;
+
+  public inputHeight: number;
+  public inputTop: number;
 
   public get currentTab(): FileBrowserTab {
     return this.tabs[this.currentTabIndex];
@@ -156,6 +163,13 @@ export class FileBrowserPanelComponent implements OnInit {
         this.selectTab();
       });
 
+    this.keystrokeService
+      .bind(Key.F2, this.panelType)
+      .subscribe(() => {
+        console.log('op');
+        this.showInput();
+      });
+
     this.panelManagerService.panelChanged.subscribe((panel) => {
       if (panel === this.panelType) {
         this.currentTab.selectFile();
@@ -211,5 +225,19 @@ export class FileBrowserPanelComponent implements OnInit {
     this.currentTab.setFiles(this.files);
     this.currentTab.setCurrentDirectory(this.currentDirectory);
     this.selectTab();
+  }
+
+
+  private showInput(): void {
+    let selectedFile = this.currentTab.getSelectedFile();
+    let selectedFileElement = document.getElementById('file-' + selectedFile.id);
+
+    let a = this.renameFileTextbox
+      .showOn(selectedFileElement)
+      .subscribe(obs => {
+        console.log(obs);
+
+        a.unsubscribe();
+      });
   }
 }

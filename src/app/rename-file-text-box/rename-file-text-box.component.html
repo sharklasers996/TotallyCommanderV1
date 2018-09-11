@@ -1,0 +1,3 @@
+<div *ngIf="visible" class="rename-file-textbox" [style.top.px]="inputTop" [style.height.px]="inputHeight">
+  <input #textBox type="text" [(ngModel)]="input" (keydown)="keydown($event)">
+</div>

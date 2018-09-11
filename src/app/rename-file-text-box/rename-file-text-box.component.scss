@@ -1,0 +1,8 @@
+@import '../../variables.scss';
+.rename-file-textbox {
+    position: absolute;
+    width: $col-name-width;
+    >input {
+        width: 100%;
+    }
+}
